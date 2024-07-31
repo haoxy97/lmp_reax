@@ -1,0 +1,32 @@
+variable   temperature      equal 3000
+units		real
+boundary    p p p
+atom_style	charge
+read_data  box_50_rho_46.data
+pair_style	reax/c NULL safezone 20 mincap 200
+pair_coeff	* * cho2016.ff C H O 
+neighbor	2 bin
+neigh_modify	every 10 delay 0 check no
+timestep	 0.1
+velocity all create  ${temperature} 21140 dist gaussian # RANDOM
+thermo 1000
+thermo_style custom step temp press density pe 
+fix  1base   all qeq/reax 1 0.0 10.0 1e-6 reax/c
+minimize 0.0 1.0e-8 1000 1000
+# initial temperature balance
+fix  1 all nvt     temp  ${temperature}   ${temperature}  $(200.*dt) 
+run   1000 
+# record now
+reset_timestep 0
+shell "mkdir -p traj"
+dump 2 all custom 1000  ./traj/*.atom id type x y z q
+fix  1 all nvt   temp  ${temperature}  ${temperature}  $(200.*dt) 
+shell "mkdir -p bond"
+variable dumpNum loop 1 100 pad
+label loop
+fix  2   all reax/c/bonds 10  bond/${dumpNum}.bond 
+run   10000
+unfix 2
+shell tar -czvf bond/${dumpNum}.bond.gz  bond/${dumpNum}.bond;rm bond/${dumpNum}.bond
+next dumpNum
+jump SELF loop
