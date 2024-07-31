@@ -8,6 +8,7 @@ post code for paper "Assessment on the Rings Cleavage Mechanism of Polycyclic Ar
 clone
 cd src
 pip3 install .
+```
 # Usage
 open a terminal
-python3 -m "import lmp_reax;lmp_reax.run()"
+`python3 -m "import lmp_reax;lmp_reax.run()"`
