@@ -12,3 +12,9 @@ pip3 install .
 # Usage
 open a terminal
 `python3 -m "import lmp_reax;lmp_reax.run()"`
+# example
+```bash
+cd lmp_reax/example
+lmp -i user.inp # need run lammps first to generate traj file.
+python3 -m "import lmp_reax;lmp_reax.run()
+```
