@@ -5,8 +5,8 @@ post code for paper "Assessment on the Rings Cleavage Mechanism of Polycyclic Ar
 - python packdges: pandas, numpy, matplotlib, openbabel (can be installed from `pip3`)
 # Installation
 ```bash
-clone
-cd src
+git clone https://github.com/haoxy97/lmp_reax.git
+cd lmp_reax/src
 pip3 install .
 ```
 # Usage
